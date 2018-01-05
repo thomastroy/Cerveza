@@ -1,0 +1,292 @@
+{
+	"info": {
+		"name": "Cerveza",
+		"_postman_id": "6d05eb28-75b0-481e-c745-dfbed3cff2f8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Invalid validateusername",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c29b68ff-04bb-462e-a209-966dc0ed98a0",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 2000\"] = responseCode.code === 2000;",
+							"",
+							"tests[\"Invalid Email Message\"] = responseBody.has(\"Invalid email provided for username\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"var schema = {",
+							"   \"type\": \"object\", ",
+							"   \"properties\": {",
+							"     \"status\": { ",
+							"       \"type\": \"string\", ",
+							"     },",
+							"\t \"code\": {",
+							"\t   \"type\": \"number\"",
+							"\t },",
+							"\t \"message\": {",
+							"\t   \"type\": \"string\"",
+							"\t },",
+							"\t \"data\": {",
+							"       \"type\": \"object\", ",
+							"       \"properties\": {",
+							"         \"developerMessage\": {",
+							"           \"type\": \"string\"",
+							"\t\t   },",
+							"\t\t   \"required\": [",
+							"\t\t     \"developerMessage\"",
+							"\t\t   ]",
+							"\t\t   }",
+							"   }, ",
+							"   \"required\": [",
+							"     \"status\",",
+							"\t \"code\",",
+							"\t \"message\",",
+							"\t \"data\"",
+							"   ]",
+							"}",
+							"};",
+							"",
+							"tests[\"Valid Schema\"] = tv4.validate(data, schema);",
+							"console.log(\"Validation failed: \", tv4.error);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Version",
+						"value": "1.5.11"
+					},
+					{
+						"key": "X-Dev-Mode",
+						"value": "debug"
+					},
+					{
+						"key": "X-Origin-Domain",
+						"value": "ovrc"
+					},
+					{
+						"key": "X-Session-Id",
+						"value": "{{cervezasession}}"
+					},
+					{
+						"key": "X-Target-Client",
+						"value": "tablet"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"invalid\"\n}"
+				},
+				"url": {
+					"raw": "{{cervezaurl}}/validateusername",
+					"host": [
+						"{{cervezaurl}}"
+					],
+					"path": [
+						"validateusername"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Valid validateusername",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3ec7072-df5c-4398-8d60-0bcfc0685134",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Valid Email Message\"] = responseBody.has(\"Username is available\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"var schema = {",
+							"   \"type\": \"object\", ",
+							"   \"properties\": {",
+							"     \"status\": { ",
+							"       \"type\": \"string\" ",
+							"     },",
+							"\t \"code\": {",
+							"\t   \"type\": \"number\"",
+							"\t },",
+							"\t \"message\": {",
+							"\t   \"type\": \"string\"",
+							"\t }",
+							"   }, ",
+							"   \"required\": [",
+							"     \"status\",",
+							"\t \"code\",",
+							"\t \"message\"",
+							"   ]",
+							"}",
+							"",
+							"tests[\"Valid Schema\"] = tv4.validate(data, schema);",
+							"console.log(\"Validation failed: \", tv4.error);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Version",
+						"value": "1.5.11"
+					},
+					{
+						"key": "X-Dev-Mode",
+						"value": "debug"
+					},
+					{
+						"key": "X-Origin-Domain",
+						"value": "ovrc"
+					},
+					{
+						"key": "X-Session-Id",
+						"value": "{{cervezasession}}"
+					},
+					{
+						"key": "X-Target-Client",
+						"value": "tablet"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"thomastroyr+{{$randomInt}}@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "{{cervezaurl}}/validateusername",
+					"host": [
+						"{{cervezaurl}}"
+					],
+					"path": [
+						"validateusername"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Username taken validateusername",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7099aff8-61a3-4579-99d6-ef0654e8af43",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Username taken\"] = responseBody.has(\"This username is taken\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"var schema = {",
+							"   \"type\": \"object\", ",
+							"   \"properties\": {",
+							"     \"status\": { ",
+							"       \"type\": \"string\", ",
+							"     },",
+							"\t \"code\": {",
+							"\t   \"type\": \"number\"",
+							"\t },",
+							"\t \"message\": {",
+							"\t   \"type\": \"string\"",
+							"\t },",
+							"\t \"data\": {",
+							"       \"type\": \"object\", ",
+							"       \"properties\": {",
+							"         \"developerMessage\": {",
+							"           \"type\": \"string\"",
+							"\t\t   },",
+							"\t\t   \"required\": [",
+							"\t\t     \"developerMessage\"",
+							"\t\t   ]",
+							"\t\t   }",
+							"   }, ",
+							"   \"required\": [",
+							"     \"status\",",
+							"\t \"code\",",
+							"\t \"message\",",
+							"\t \"data\"",
+							"   ]",
+							"}",
+							"};",
+							"",
+							"tests[\"Valid Schema\"] = tv4.validate(data, schema);",
+							"console.log(\"Validation failed: \", tv4.error);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Version",
+						"value": "1.5.11"
+					},
+					{
+						"key": "X-Dev-Mode",
+						"value": "debug"
+					},
+					{
+						"key": "X-Origin-Domain",
+						"value": "ovrc"
+					},
+					{
+						"key": "X-Session-Id",
+						"value": "{{cervezasession}}"
+					},
+					{
+						"key": "X-Target-Client",
+						"value": "tablet"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"troy.thomas@snapav.com\"\n}"
+				},
+				"url": {
+					"raw": "{{cervezaurl}}/validateusername",
+					"host": [
+						"{{cervezaurl}}"
+					],
+					"path": [
+						"validateusername"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
